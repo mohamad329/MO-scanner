@@ -20,7 +20,7 @@ A fast, dependency-free TCP/UDP port scanner written in Python, with service det
 ## Install
 
 ```bash
-git clone https://github.com/USERNAME/MO-scanner.git
+git clone https://github.com/mohamad329/MO-scanner.git
 cd MO-scanner
 pip install .            # adds the `mo-port-scan` command
 # or run without installing:
