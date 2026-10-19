@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mo-port-scan"
+dynamic = ["version"]
+description = "Fast multi-threaded TCP/UDP port scanner with service detection and HTML/JSON/CSV reports"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+keywords = ["port-scanner", "security", "pentesting", "network", "cybersecurity"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Information Technology",
+    "Topic :: Security",
+    "Topic :: System :: Networking",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+mo-port-scan = "mo_port_scan.cli:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "mo_port_scan.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["mo_port_scan*"]
