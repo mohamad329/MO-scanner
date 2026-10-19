@@ -10,6 +10,7 @@ from datetime import datetime, timezone
 from typing import List, Optional
 
 from . import __version__
+from .banner import render_banner
 from .reporters import FORMATS, render_host, write_report
 from .scanner import HostResult, Scanner
 from .utils import (Progress, make_colorizer, parse_ports, parse_targets,
@@ -60,6 +61,7 @@ def build_parser() -> argparse.ArgumentParser:
     o.add_argument("-o", "--output", metavar="FILE", help="save report (format from extension: .json .csv .html .txt)")
     o.add_argument("--format", choices=sorted(FORMATS), help="force report format")
     o.add_argument("-q", "--quiet", action="store_true", help="results only (no banner/progress)")
+    o.add_argument("--no-banner", action="store_true", help="do not print the startup banner")
     o.add_argument("-v", "--verbose", action="store_true", help="debug output")
     o.add_argument("--no-color", action="store_true", help="disable colored output")
     o.add_argument("-y", "--yes", action="store_true", help="confirm scanning more than 256 hosts")
@@ -117,6 +119,9 @@ def main(argv: Optional[List[str]] = None) -> int:
                       progress=progress)
 
     if show_status:
+        if not args.no_banner:
+            color_err = make_colorizer(supports_color(sys.stderr) and not args.no_color)
+            print(render_banner(__version__, color_err), file=sys.stderr)
         print(c(LEGAL, "33"), file=sys.stderr)
         print(f"[*] {len(targets)} target(s) | {len(ports)} port(s) | scan: {args.scan} | "
               f"threads: {args.threads} | timeout: {args.timeout}s", file=sys.stderr)
